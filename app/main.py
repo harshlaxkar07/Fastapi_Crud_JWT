@@ -1,4 +1,9 @@
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from database import get_connection
 
@@ -23,9 +28,44 @@ from schemas import (
     Token,
 )
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+FRONTEND_DIR = BASE_DIR / "frontend"
+
+
 app = FastAPI(
     title="FastAPI User CRUD API",
+    description=(
+        "User accounts with bcrypt password hashing and JWT access tokens. "
+        "The identity console is served at /ui."
+    ),
 )
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+if FRONTEND_DIR.is_dir():
+
+    app.mount(
+        "/ui",
+        StaticFiles(directory=FRONTEND_DIR, html=True),
+        name="ui",
+    )
+
+    @app.get("/", include_in_schema=False)
+    def console():
+        """
+        Send the application root to the identity console.
+        """
+
+        return RedirectResponse(url="/ui/")
 
 
 

@@ -1,0 +1,84 @@
+/* Identity Console — project styling on top of the shared UI system. */
+:root { --accent-h: 214; --accent-s: 88%; --accent-l: 58%; }
+
+/* ---------- auth screen ---------- */
+.auth-screen { display: grid; grid-template-columns: 1.05fr .95fr; min-height: 100vh; }
+
+.auth-art {
+  background:
+    radial-gradient(900px 500px at 15% 10%, hsl(var(--accent-h) 80% 45% / .28), transparent 62%),
+    radial-gradient(700px 460px at 85% 85%, hsl(calc(var(--accent-h) + 46) 78% 48% / .22), transparent 60%),
+    var(--bg-elev);
+  border-right: 1px solid var(--border);
+  display: grid; place-items: center; padding: 48px;
+  position: relative; overflow: hidden;
+}
+.auth-art::after {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 52px 52px;
+  opacity: .28; mask-image: radial-gradient(70% 60% at 50% 45%, #000, transparent);
+}
+.auth-art-inner { max-width: 440px; position: relative; z-index: 1; }
+.auth-art h1 { font-size: 2.1rem; margin: 22px 0 12px; letter-spacing: -.03em; }
+.auth-art > .auth-art-inner > p { color: var(--text-muted); font-size: .96rem; line-height: 1.65; }
+
+.brand-mark.lg { width: 52px; height: 52px; flex-basis: 52px; border-radius: 15px; }
+
+.auth-points { list-style: none; padding: 0; margin: 26px 0 0; display: flex; flex-direction: column; gap: 13px; }
+.auth-points li { display: flex; align-items: center; gap: 12px; font-size: .88rem; color: var(--text-muted); }
+.auth-points svg { width: 16px; height: 16px; color: var(--accent); flex: 0 0 16px; }
+
+.auth-panel { display: grid; place-items: center; padding: 40px 24px; background: var(--bg); }
+.auth-box { width: 100%; max-width: 400px; }
+.auth-tabs { width: 100%; margin-bottom: 22px; }
+.auth-tabs button { flex: 1; }
+
+.auth-form { display: flex; flex-direction: column; gap: 14px; }
+.auth-form h2 { font-size: 1.35rem; }
+.auth-form .mb-2 { margin-bottom: 4px; }
+
+.strength { display: flex; flex-direction: column; gap: 5px; margin-top: 3px; }
+.strength .meter > span { background: var(--danger); }
+.strength .meter > span.mid { background: var(--warn); }
+.strength .meter > span.good { background: var(--ok); }
+
+.auth-foot {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border);
+}
+.auth-foot .conn { margin-left: auto; }
+
+.conn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .78rem; color: var(--text-muted);
+  padding: 6px 11px; border-radius: var(--radius-sm); background: var(--surface-2);
+}
+.conn .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-dim); flex: 0 0 7px; }
+.conn.online .dot { background: var(--ok); box-shadow: 0 0 0 3px var(--ok-soft); }
+.conn.offline .dot { background: var(--danger); box-shadow: 0 0 0 3px var(--danger-soft); }
+
+/* ---------- app ---------- */
+.me { display: flex; align-items: center; gap: 10px; }
+.me-body { flex: 1; min-width: 0; }
+.me-name { font-size: .86rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.me-sub { font-size: .72rem; color: var(--text-dim); }
+
+.user-cell { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.user-cell .ub { min-width: 0; }
+.user-cell .un { font-weight: 580; }
+.user-cell .uu { font-size: .77rem; color: var(--text-dim); }
+
+code {
+  background: var(--surface-2); padding: 1px 6px; border-radius: 5px;
+  border: 1px solid var(--border); color: var(--text-muted);
+}
+
+#tokenRaw { word-break: break-all; white-space: pre-wrap; color: var(--accent); }
+
+@media (max-width: 900px) {
+  .auth-screen { grid-template-columns: 1fr; }
+  .auth-art { display: none; }
+}
